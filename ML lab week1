@@ -1,0 +1,953 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMuirtjOD3j1mZB9B51KR1L",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/VyzaBhavana/Bhavana/blob/main/ML%20lab%20week1\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "-EuCEFSjVALw",
+        "outputId": "83d55157-0e87-44a3-c4a3-dbf6560e025b"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Scalar value: 5\n"
+          ]
+        }
+      ],
+      "source": [
+        "import numpy as np\n",
+        "scalar = np.array(5)\n",
+        "print(\"Scalar value:\", scalar)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "vector = np.array([1, 2, 3])\n",
+        "print(\"Vector values:\", vector)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "qPJlbfnRVijZ",
+        "outputId": "8b62d745-1749-4657-ea16-29dfd0f91f9d"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Vector values: [1 2 3]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "# Scalar example\n",
+        "scalar = np.array(5)\n",
+        "print(\"Scalar value:\", scalar)\n",
+        "\n",
+        "# Vector example\n",
+        "vector = np.array([1, 2, 3])\n",
+        "print(\"Vector values:\", vector)\n",
+        "\n",
+        "# 2D Tensor (Matrix) example\n",
+        "matrix = np.array([[1, 2, 3], [4, 5, 6]])\n",
+        "print(\"2D Tensor (Matrix):\\n\", matrix)\n",
+        "\n",
+        "# 3D Tensor example\n",
+        "tensor_3d = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])\n",
+        "print(\"3D Tensor:\\n\", tensor_3d)\n",
+        "\n",
+        "# 4D Tensor example\n",
+        "tensor_4d = np.random.rand(2, 3, 4, 5)\n",
+        "print(\"Shape of 4D Tensor:\", tensor_4d.shape)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "h8aV95WcVw6D",
+        "outputId": "65bacac7-3df5-4293-a93b-5e1a818eef91"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Scalar value: 5\n",
+            "Vector values: [1 2 3]\n",
+            "2D Tensor (Matrix):\n",
+            " [[1 2 3]\n",
+            " [4 5 6]]\n",
+            "3D Tensor:\n",
+            " [[[ 1  2  3]\n",
+            "  [ 4  5  6]]\n",
+            "\n",
+            " [[ 7  8  9]\n",
+            "  [10 11 12]]]\n",
+            "Shape of 4D Tensor: (2, 3, 4, 5)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from tensorflow.keras.models import Sequential\n",
+        "from tensorflow.keras.layers import Dense\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "# Step 1: Generate Training Data\n",
+        "def generate_data(num_samples):\n",
+        "    x1 = np.random.randint(0, 100, size=num_samples)\n",
+        "    x2 = np.random.randint(0, 100, size=num_samples)\n",
+        "    y = x1 + x2\n",
+        "    return np.vstack((x1, x2)).T, y\n",
+        "\n",
+        "num_samples = 10000\n",
+        "X, y = generate_data(num_samples)\n",
+        "\n",
+        "# Split the data into training and testing sets\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Step 2: Define the Model\n",
+        "model = Sequential()\n",
+        "model.add(Dense(10, input_dim=2, activation='relu'))  # Input layer with 2 inputs\n",
+        "model.add(Dense(5, activation='relu'))  # Hidden layer\n",
+        "model.add(Dense(1))  # Output layer\n",
+        "\n",
+        "# Step 3: Compile the Model\n",
+        "model.compile(optimizer='adam', loss='mean_squared_error')\n",
+        "\n",
+        "# Step 4: Train the Model\n",
+        "model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2)\n",
+        "\n",
+        "# Step 5: Evaluate the Model\n",
+        "loss = model.evaluate(X_test, y_test)\n",
+        "print(f'Test Loss: {loss}')\n",
+        "\n",
+        "# Make a prediction\n",
+        "sample_input = np.array([[23, 45]])  # Example input\n",
+        "predicted_sum = model.predict(sample_input)\n",
+        "print(f'Predicted Sum: {predicted_sum[0][0]}')\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "15i5jI2njLIF",
+        "outputId": "bf4e639c-84a3-4ef0-ddb7-bbb53fd8c8b0"
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Epoch 1/50\n",
+            "200/200 [==============================] - 1s 3ms/step - loss: 4920.3374 - val_loss: 1116.0389\n",
+            "Epoch 2/50\n",
+            "200/200 [==============================] - 1s 3ms/step - loss: 314.4203 - val_loss: 42.0595\n",
+            "Epoch 3/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 16.6658 - val_loss: 6.9739\n",
+            "Epoch 4/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 4.4178 - val_loss: 3.2099\n",
+            "Epoch 5/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 2.3524 - val_loss: 1.8930\n",
+            "Epoch 6/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 1.4692 - val_loss: 1.2667\n",
+            "Epoch 7/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 1.0112 - val_loss: 0.8717\n",
+            "Epoch 8/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.7508 - val_loss: 0.6649\n",
+            "Epoch 9/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.5957 - val_loss: 0.5310\n",
+            "Epoch 10/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.4896 - val_loss: 0.4459\n",
+            "Epoch 11/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.4196 - val_loss: 0.3785\n",
+            "Epoch 12/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.3663 - val_loss: 0.3306\n",
+            "Epoch 13/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.3239 - val_loss: 0.2909\n",
+            "Epoch 14/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.2840 - val_loss: 0.2536\n",
+            "Epoch 15/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.2460 - val_loss: 0.2177\n",
+            "Epoch 16/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.2137 - val_loss: 0.1912\n",
+            "Epoch 17/50\n",
+            "200/200 [==============================] - 1s 3ms/step - loss: 0.1828 - val_loss: 0.1619\n",
+            "Epoch 18/50\n",
+            "200/200 [==============================] - 1s 4ms/step - loss: 0.1551 - val_loss: 0.1373\n",
+            "Epoch 19/50\n",
+            "200/200 [==============================] - 1s 5ms/step - loss: 0.1307 - val_loss: 0.1212\n",
+            "Epoch 20/50\n",
+            "200/200 [==============================] - 1s 4ms/step - loss: 0.1091 - val_loss: 0.0964\n",
+            "Epoch 21/50\n",
+            "200/200 [==============================] - 1s 5ms/step - loss: 0.0898 - val_loss: 0.0760\n",
+            "Epoch 22/50\n",
+            "200/200 [==============================] - 1s 6ms/step - loss: 0.0726 - val_loss: 0.0616\n",
+            "Epoch 23/50\n",
+            "200/200 [==============================] - 1s 3ms/step - loss: 0.0592 - val_loss: 0.0506\n",
+            "Epoch 24/50\n",
+            "200/200 [==============================] - 1s 4ms/step - loss: 0.0483 - val_loss: 0.0417\n",
+            "Epoch 25/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0398 - val_loss: 0.0337\n",
+            "Epoch 26/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0323 - val_loss: 0.0293\n",
+            "Epoch 27/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0259 - val_loss: 0.0217\n",
+            "Epoch 28/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0203 - val_loss: 0.0171\n",
+            "Epoch 29/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0154 - val_loss: 0.0124\n",
+            "Epoch 30/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0114 - val_loss: 0.0091\n",
+            "Epoch 31/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0082 - val_loss: 0.0065\n",
+            "Epoch 32/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0058 - val_loss: 0.0045\n",
+            "Epoch 33/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0040 - val_loss: 0.0029\n",
+            "Epoch 34/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0025 - val_loss: 0.0019\n",
+            "Epoch 35/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 0.0016 - val_loss: 0.0012\n",
+            "Epoch 36/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 9.5846e-04 - val_loss: 7.0291e-04\n",
+            "Epoch 37/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 5.5581e-04 - val_loss: 4.2326e-04\n",
+            "Epoch 38/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 3.2988e-04 - val_loss: 2.8376e-04\n",
+            "Epoch 39/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 2.0390e-04 - val_loss: 1.8243e-04\n",
+            "Epoch 40/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 1.2961e-04 - val_loss: 1.3336e-04\n",
+            "Epoch 41/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 9.8119e-05 - val_loss: 1.1091e-04\n",
+            "Epoch 42/50\n",
+            "200/200 [==============================] - 1s 3ms/step - loss: 7.5080e-05 - val_loss: 9.5837e-05\n",
+            "Epoch 43/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 6.2675e-05 - val_loss: 8.6215e-05\n",
+            "Epoch 44/50\n",
+            "200/200 [==============================] - 1s 5ms/step - loss: 5.4365e-05 - val_loss: 7.9230e-05\n",
+            "Epoch 45/50\n",
+            "200/200 [==============================] - 1s 5ms/step - loss: 4.9997e-05 - val_loss: 7.4248e-05\n",
+            "Epoch 46/50\n",
+            "200/200 [==============================] - 1s 3ms/step - loss: 5.8824e-05 - val_loss: 7.1278e-05\n",
+            "Epoch 47/50\n",
+            "200/200 [==============================] - 1s 4ms/step - loss: 4.5874e-04 - val_loss: 7.1947e-05\n",
+            "Epoch 48/50\n",
+            "200/200 [==============================] - 1s 3ms/step - loss: 4.1095e-05 - val_loss: 1.0793e-04\n",
+            "Epoch 49/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 3.6917e-05 - val_loss: 5.2216e-05\n",
+            "Epoch 50/50\n",
+            "200/200 [==============================] - 0s 2ms/step - loss: 3.3501e-05 - val_loss: 6.1091e-05\n",
+            "63/63 [==============================] - 0s 1ms/step - loss: 5.1589e-05\n",
+            "Test Loss: 5.1589420763775706e-05\n",
+            "1/1 [==============================] - 0s 98ms/step\n",
+            "Predicted Sum: 67.99873352050781\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from tensorflow.keras.models import Sequential\n",
+        "from tensorflow.keras.layers import Dense\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "# Step 1: Generate Training Data\n",
+        "def generate_data(num_samples):\n",
+        "    x1 = np.random.randint(0, 100, size=num_samples)\n",
+        "    x2 = np.random.randint(0, 100, size=num_samples)\n",
+        "    y = x1 + x2\n",
+        "    return np.vstack((x1, x2)).T, y\n",
+        "\n",
+        "num_samples = 10000\n",
+        "X, y = generate_data(num_samples)\n",
+        "\n",
+        "# Split the data into training and testing sets\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Step 2: Define the Model\n",
+        "model = Sequential()\n",
+        "model.add(Dense(10, input_dim=2, activation='relu'))  # Input layer with 2 inputs\n",
+        "model.add(Dense(5, activation='relu'))  # Hidden layer\n",
+        "model.add(Dense(1))  # Output layer\n",
+        "\n",
+        "# Step 3: Compile the Model\n",
+        "model.compile(optimizer='adam', loss='mean_squared_error')\n",
+        "\n",
+        "# Step 4: Train the Model\n",
+        "model.fit(X_train, y_train, epochs=5, batch_size=64, validation_split=0.2)\n",
+        "\n",
+        "# Step 5: Evaluate the Model\n",
+        "loss = model.evaluate(X_test, y_test)\n",
+        "print(f'Test Loss: {loss}')\n",
+        "\n",
+        "# Make a prediction\n",
+        "sample_input = np.array([[23, 45]])  # Example input\n",
+        "predicted_sum = model.predict(sample_input)\n",
+        "print(f'Predicted Sum: {predicted_sum[0][0]}')\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "OC562jk3j_8d",
+        "outputId": "04bcd733-41d9-4e81-c5fc-73bb488ff678"
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Epoch 1/5\n",
+            "100/100 [==============================] - 1s 4ms/step - loss: 112.8430 - val_loss: 8.8946\n",
+            "Epoch 2/5\n",
+            "100/100 [==============================] - 0s 3ms/step - loss: 3.1801 - val_loss: 0.9058\n",
+            "Epoch 3/5\n",
+            "100/100 [==============================] - 0s 3ms/step - loss: 0.5936 - val_loss: 0.3757\n",
+            "Epoch 4/5\n",
+            "100/100 [==============================] - 0s 2ms/step - loss: 0.2807 - val_loss: 0.1790\n",
+            "Epoch 5/5\n",
+            "100/100 [==============================] - 0s 2ms/step - loss: 0.1318 - val_loss: 0.0850\n",
+            "63/63 [==============================] - 0s 2ms/step - loss: 0.0831\n",
+            "Test Loss: 0.08307588845491409\n",
+            "1/1 [==============================] - 0s 87ms/step\n",
+            "Predicted Sum: 68.11457824707031\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from tensorflow.keras.models import Sequential\n",
+        "from tensorflow.keras.layers import Dense\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "# Step 1: Generate Training Data\n",
+        "def generate_data(num_samples):\n",
+        "    x1 = np.random.randint(0, 100, size=num_samples)\n",
+        "    x2 = np.random.randint(0, 100, size=num_samples)\n",
+        "    y = x1 + x2\n",
+        "    return np.vstack((x1, x2)).T, y\n",
+        "\n",
+        "num_samples = 10000\n",
+        "X, y = generate_data(num_samples)\n",
+        "\n",
+        "# Split the data into training and testing sets\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Step 2: Define the Model\n",
+        "model = Sequential()\n",
+        "model.add(Dense(10, input_dim=2, activation='relu'))  # Input layer with 2 inputs\n",
+        "model.add(Dense(5, activation='relu'))  # Hidden layer\n",
+        "model.add(Dense(1))  # Output layer\n",
+        "\n",
+        "# Step 3: Compile the Model\n",
+        "model.compile(optimizer='adam', loss='mean_squared_error')\n",
+        "\n",
+        "# Step 4: Train the Model\n",
+        "model.fit(X_train, y_train, epochs=6, batch_size=60, validation_split=0.2)\n",
+        "\n",
+        "# Step 5: Evaluate the Model\n",
+        "loss = model.evaluate(X_test, y_test)\n",
+        "print(f'Test Loss: {loss}')\n",
+        "\n",
+        "# Make a prediction\n",
+        "sample_input = np.array([[23, 45]])  # Example input\n",
+        "predicted_sum = model.predict(sample_input)\n",
+        "print(f'Predicted Sum: {predicted_sum[0][0]}')\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "NXYKbUtekdTZ",
+        "outputId": "03b5e620-a56b-4dd2-beb1-14b810c0d85f"
+      },
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Epoch 1/6\n",
+            "107/107 [==============================] - 1s 4ms/step - loss: 12045.8691 - val_loss: 11344.3320\n",
+            "Epoch 2/6\n",
+            "107/107 [==============================] - 0s 2ms/step - loss: 10904.7227 - val_loss: 9899.1699\n",
+            "Epoch 3/6\n",
+            "107/107 [==============================] - 0s 2ms/step - loss: 7970.1943 - val_loss: 4988.7725\n",
+            "Epoch 4/6\n",
+            "107/107 [==============================] - 0s 2ms/step - loss: 2100.0283 - val_loss: 215.5758\n",
+            "Epoch 5/6\n",
+            "107/107 [==============================] - 0s 4ms/step - loss: 53.6940 - val_loss: 18.1969\n",
+            "Epoch 6/6\n",
+            "107/107 [==============================] - 1s 7ms/step - loss: 9.8888 - val_loss: 5.3481\n",
+            "63/63 [==============================] - 0s 1ms/step - loss: 5.0417\n",
+            "Test Loss: 5.0416975021362305\n",
+            "1/1 [==============================] - 0s 65ms/step\n",
+            "Predicted Sum: 69.81265258789062\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from tensorflow.keras.models import Sequential\n",
+        "from tensorflow.keras.layers import Dense\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "# Step 1: Generate Training Data\n",
+        "def generate_data(num_samples):\n",
+        "    x1 = np.random.randint(0, 100, size=num_samples)\n",
+        "    x2 = np.random.randint(0, 100, size=num_samples)\n",
+        "    y = x1 + x2\n",
+        "    return np.vstack((x1, x2)).T, y\n",
+        "\n",
+        "num_samples = 10000\n",
+        "X, y = generate_data(num_samples)\n",
+        "\n",
+        "# Split the data into training and testing sets\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Step 2: Define the Model\n",
+        "model = Sequential()\n",
+        "model.add(Dense(10, input_dim=2, activation='relu'))  # Input layer with 2 inputs\n",
+        "model.add(Dense(5, activation='relu'))  # Hidden layer\n",
+        "model.add(Dense(1))  # Output layer\n",
+        "\n",
+        "# Step 3: Compile the Model\n",
+        "model.compile(optimizer='adam', loss='mean_squared_error')\n",
+        "\n",
+        "# Step 4: Train the Model\n",
+        "model.fit(X_train, y_train, epochs=3, batch_size=50, validation_split=0.2)\n",
+        "\n",
+        "# Step 5: Evaluate the Model\n",
+        "loss = model.evaluate(X_test, y_test)\n",
+        "print(f'Test Loss: {loss}')\n",
+        "\n",
+        "# Make a prediction\n",
+        "sample_input = np.array([[23, 45]])  # Example input\n",
+        "predicted_sum = model.predict(sample_input)\n",
+        "print(f'Predicted Sum: {predicted_sum[0][0]}')\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "hLgTQkDxktVV",
+        "outputId": "62629b0b-d44c-4482-8794-9cc0193463f9"
+      },
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Epoch 1/3\n",
+            "128/128 [==============================] - 1s 3ms/step - loss: 11428.9365 - val_loss: 8953.5449\n",
+            "Epoch 2/3\n",
+            "128/128 [==============================] - 0s 2ms/step - loss: 4819.2583 - val_loss: 1239.1071\n",
+            "Epoch 3/3\n",
+            "128/128 [==============================] - 0s 2ms/step - loss: 439.3883 - val_loss: 111.2440\n",
+            "63/63 [==============================] - 0s 1ms/step - loss: 115.1607\n",
+            "Test Loss: 115.1606674194336\n",
+            "1/1 [==============================] - 0s 62ms/step\n",
+            "Predicted Sum: 56.50040054321289\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from tensorflow.keras.models import Sequential\n",
+        "from tensorflow.keras.layers import Dense\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "# Step 1: Generate Training Data\n",
+        "def generate_data(num_samples):\n",
+        "    x1 = np.random.randint(0, 100, size=num_samples)\n",
+        "    x2 = np.random.randint(0, 100, size=num_samples)\n",
+        "    y = x1 + x2\n",
+        "    return np.vstack((x1, x2)).T, y\n",
+        "\n",
+        "num_samples = 10000\n",
+        "X, y = generate_data(num_samples)\n",
+        "\n",
+        "# Split the data into training and testing sets\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Step 2: Define the Model\n",
+        "model = Sequential()\n",
+        "model.add(Dense(10, input_dim=2, activation='relu'))  # Input layer with 2 inputs\n",
+        "model.add(Dense(5, activation='relu'))  # Hidden layer\n",
+        "model.add(Dense(1))  # Output layer\n",
+        "\n",
+        "# Step 3: Compile the Model\n",
+        "model.compile(optimizer='adam', loss='mean_squared_error')\n",
+        "\n",
+        "# Step 4: Train the Model\n",
+        "model.fit(X_train, y_train, epochs=3, batch_size=50, validation_split=0.2)\n",
+        "\n",
+        "# Step 5: Evaluate the Model\n",
+        "loss = model.evaluate(X_test, y_test)\n",
+        "print(f'Test Loss: {loss}')\n",
+        "\n",
+        "# Make a prediction\n",
+        "sample_input = np.array([[23, 45]])  # Example input\n",
+        "predicted_sum = model.predict(sample_input)\n",
+        "print(f'Predicted Sum: {predicted_sum[0][0]}')\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ikSFdrn3k8fs",
+        "outputId": "f475c082-c89a-4362-e204-435cd8d08a53"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Epoch 1/3\n",
+            "128/128 [==============================] - 1s 3ms/step - loss: 25114.4844 - val_loss: 17512.6504\n",
+            "Epoch 2/3\n",
+            "128/128 [==============================] - 0s 2ms/step - loss: 14367.5596 - val_loss: 12412.3438\n",
+            "Epoch 3/3\n",
+            "128/128 [==============================] - 0s 3ms/step - loss: 11621.4961 - val_loss: 11685.0098\n",
+            "63/63 [==============================] - 0s 1ms/step - loss: 11478.9463\n",
+            "Test Loss: 11478.9462890625\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "WARNING:tensorflow:5 out of the last 5 calls to <function Model.make_predict_function.<locals>.predict_function at 0x78c29dd5f7f0> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "1/1 [==============================] - 0s 70ms/step\n",
+            "Predicted Sum: 0.3270208537578583\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from tensorflow.keras.models import Sequential\n",
+        "from tensorflow.keras.layers import Dense\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "# Step 1: Generate Training Data\n",
+        "def generate_data(num_samples):\n",
+        "    x1 = np.random.randint(0, 100, size=num_samples)\n",
+        "    x2 = np.random.randint(0, 100, size=num_samples)\n",
+        "    y = x1 + x2\n",
+        "    return np.vstack((x1, x2)).T, y\n",
+        "\n",
+        "num_samples = 10000\n",
+        "X, y = generate_data(num_samples)\n",
+        "\n",
+        "# Split the data into training and testing sets\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Step 2: Define the Model\n",
+        "model = Sequential()\n",
+        "model.add(Dense(10, input_dim=2, activation='relu'))  # Input layer with 2 inputs\n",
+        "model.add(Dense(5, activation='relu'))  # Hidden layer\n",
+        "model.add(Dense(1))  # Output layer\n",
+        "\n",
+        "# Step 3: Compile the Model\n",
+        "model.compile(optimizer='adam', loss='mean_squared_error')\n",
+        "\n",
+        "# Step 4: Train the Model\n",
+        "model.fit(X_train, y_train, epochs=4, batch_size=55, validation_split=0.2)\n",
+        "\n",
+        "# Step 5: Evaluate the Model\n",
+        "loss = model.evaluate(X_test, y_test)\n",
+        "print(f'Test Loss: {loss}')\n",
+        "\n",
+        "# Make a prediction\n",
+        "sample_input = np.array([[23, 45]])  # Example input\n",
+        "predicted_sum = model.predict(sample_input)\n",
+        "print(f'Predicted Sum: {predicted_sum[0][0]}')\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "7_kctQgglfk6",
+        "outputId": "87c41bbc-7948-4a66-f404-d131d7538d8d"
+      },
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Epoch 1/4\n",
+            "117/117 [==============================] - 1s 4ms/step - loss: 8390.9482 - val_loss: 4964.9839\n",
+            "Epoch 2/4\n",
+            "117/117 [==============================] - 0s 3ms/step - loss: 2035.9563 - val_loss: 370.4470\n",
+            "Epoch 3/4\n",
+            "117/117 [==============================] - 0s 2ms/step - loss: 227.4901 - val_loss: 176.6697\n",
+            "Epoch 4/4\n",
+            "117/117 [==============================] - 0s 2ms/step - loss: 127.6228 - val_loss: 97.0091\n",
+            "63/63 [==============================] - 0s 2ms/step - loss: 90.8531\n",
+            "Test Loss: 90.85306549072266\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "WARNING:tensorflow:6 out of the last 6 calls to <function Model.make_predict_function.<locals>.predict_function at 0x78c29da4d900> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "1/1 [==============================] - 0s 78ms/step\n",
+            "Predicted Sum: 63.11872482299805\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from tensorflow.keras.models import Sequential\n",
+        "from tensorflow.keras.layers import Dense\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "# Step 1: Generate Training Data\n",
+        "def generate_data(num_samples):\n",
+        "    x1 = np.random.randint(0, 100, size=num_samples)\n",
+        "    x2 = np.random.randint(0, 100, size=num_samples)\n",
+        "    y = x1 + x2\n",
+        "    return np.vstack((x1, x2)).T, y\n",
+        "\n",
+        "num_samples = 10000\n",
+        "X, y = generate_data(num_samples)\n",
+        "\n",
+        "# Split the data into training and testing sets\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Step 2: Define the Model\n",
+        "model = Sequential()\n",
+        "model.add(Dense(10, input_dim=2, activation='relu'))  # Input layer with 2 inputs\n",
+        "model.add(Dense(5, activation='relu'))  # Hidden layer\n",
+        "model.add(Dense(1))  # Output layer\n",
+        "\n",
+        "# Step 3: Compile the Model\n",
+        "model.compile(optimizer='adam', loss='mean_squared_error')\n",
+        "\n",
+        "# Step 4: Train the Model\n",
+        "model.fit(X_train, y_train, epochs=2, batch_size=45, validation_split=0.2)\n",
+        "\n",
+        "# Step 5: Evaluate the Model\n",
+        "loss = model.evaluate(X_test, y_test)\n",
+        "print(f'Test Loss: {loss}')\n",
+        "\n",
+        "# Make a prediction\n",
+        "sample_input = np.array([[23, 45]])  # Example input\n",
+        "predicted_sum = model.predict(sample_input)\n",
+        "print(f'Predicted Sum: {predicted_sum[0][0]}')\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "lzFxX0RrmIrw",
+        "outputId": "18344866-3c61-4507-d281-8b413c970ffd"
+      },
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Epoch 1/2\n",
+            "143/143 [==============================] - 1s 3ms/step - loss: 3463.0457 - val_loss: 92.4537\n",
+            "Epoch 2/2\n",
+            "143/143 [==============================] - 0s 2ms/step - loss: 56.7765 - val_loss: 39.2413\n",
+            "63/63 [==============================] - 0s 1ms/step - loss: 34.6558\n",
+            "Test Loss: 34.65583038330078\n",
+            "1/1 [==============================] - 0s 58ms/step\n",
+            "Predicted Sum: 66.38062286376953\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from tensorflow.keras.models import Sequential\n",
+        "from tensorflow.keras.layers import Dense\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "# Step 1: Generate Training Data\n",
+        "def generate_data(num_samples):\n",
+        "    x1 = np.random.randint(0, 100, size=num_samples)\n",
+        "    x2 = np.random.randint(0, 100, size=num_samples)\n",
+        "    y = x1 + x2\n",
+        "    return np.vstack((x1, x2)).T, y\n",
+        "\n",
+        "num_samples = 10000\n",
+        "X, y = generate_data(num_samples)\n",
+        "\n",
+        "# Split the data into training and testing sets\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Step 2: Define the Model\n",
+        "model = Sequential()\n",
+        "model.add(Dense(10, input_dim=2, activation='relu'))  # Input layer with 2 inputs\n",
+        "model.add(Dense(5, activation='relu'))  # Hidden layer\n",
+        "model.add(Dense(1))  # Output layer\n",
+        "\n",
+        "# Step 3: Compile the Model\n",
+        "model.compile(optimizer='adam', loss='mean_squared_error')\n",
+        "\n",
+        "# Step 4: Train the Model\n",
+        "model.fit(X_train, y_train, epochs=1, batch_size=68, validation_split=0.2)\n",
+        "\n",
+        "# Step 5: Evaluate the Model\n",
+        "loss = model.evaluate(X_test, y_test)\n",
+        "print(f'Test Loss: {loss}')\n",
+        "\n",
+        "# Make a prediction\n",
+        "sample_input = np.array([[23, 45]])  # Example input\n",
+        "predicted_sum = model.predict(sample_input)\n",
+        "print(f'Predicted Sum: {predicted_sum[0][0]}')\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "3tcp491umS8O",
+        "outputId": "79302b4d-b4be-4d01-af6f-e4f8920d94af"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "95/95 [==============================] - 2s 6ms/step - loss: 1708.3114 - val_loss: 514.7579\n",
+            "63/63 [==============================] - 0s 2ms/step - loss: 525.0338\n",
+            "Test Loss: 525.0338134765625\n",
+            "1/1 [==============================] - 0s 65ms/step\n",
+            "Predicted Sum: 75.2671127319336\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from tensorflow.keras.models import Sequential\n",
+        "from tensorflow.keras.layers import Dense\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "# Step 1: Generate Training Data\n",
+        "def generate_data(num_samples):\n",
+        "    x1 = np.random.randint(0, 100, size=num_samples)\n",
+        "    x2 = np.random.randint(0, 100, size=num_samples)\n",
+        "    y = x1 + x2\n",
+        "    return np.vstack((x1, x2)).T, y\n",
+        "\n",
+        "num_samples = 10000\n",
+        "X, y = generate_data(num_samples)\n",
+        "\n",
+        "# Split the data into training and testing sets\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Step 2: Define the Model\n",
+        "model = Sequential()\n",
+        "model.add(Dense(10, input_dim=2, activation='relu'))  # Input layer with 2 inputs\n",
+        "model.add(Dense(5, activation='relu'))  # Hidden layer\n",
+        "model.add(Dense(1))  # Output layer\n",
+        "\n",
+        "# Step 3: Compile the Model\n",
+        "model.compile(optimizer='adam', loss='mean_squared_error')\n",
+        "\n",
+        "# Step 4: Train the Model\n",
+        "model.fit(X_train, y_train, epochs=1, batch_size=68, validation_split=0.2)\n",
+        "\n",
+        "# Step 5: Evaluate the Model\n",
+        "loss = model.evaluate(X_test, y_test)\n",
+        "print(f'Test Loss: {loss}')\n",
+        "\n",
+        "# Make a prediction\n",
+        "sample_input = np.array([[23, 45]])  # Example input\n",
+        "predicted_sum = model.predict(sample_input)\n",
+        "print(f'Predicted Sum: {predicted_sum[0][0]}')\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "s3krCq1kmf20",
+        "outputId": "d1c426ad-ffc3-4c22-a750-88b1dacbbd35"
+      },
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "95/95 [==============================] - 1s 6ms/step - loss: 10602.8887 - val_loss: 7399.4575\n",
+            "63/63 [==============================] - 0s 3ms/step - loss: 7472.5903\n",
+            "Test Loss: 7472.59033203125\n",
+            "1/1 [==============================] - 0s 92ms/step\n",
+            "Predicted Sum: 15.044636726379395\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "from tensorflow.keras.models import Sequential\n",
+        "from tensorflow.keras.layers import Dense\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "# Step 1: Generate Training Data\n",
+        "def generate_data(num_samples):\n",
+        "    x1 = np.random.randint(0, 100, size=num_samples)\n",
+        "    x2 = np.random.randint(0, 100, size=num_samples)\n",
+        "    y = x1 + x2\n",
+        "    return np.vstack((x1, x2)).T, y\n",
+        "\n",
+        "num_samples = 10000\n",
+        "X, y = generate_data(num_samples)\n",
+        "\n",
+        "# Split the data into training and testing sets\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Step 2: Define the Model\n",
+        "model = Sequential()\n",
+        "model.add(Dense(10, input_dim=2, activation='relu'))  # Input layer with 2 inputs\n",
+        "model.add(Dense(5, activation='relu'))  # Hidden layer\n",
+        "model.add(Dense(1))  # Output layer\n",
+        "\n",
+        "# Step 3: Compile the Model\n",
+        "model.compile(optimizer='adam', loss='mean_squared_error')\n",
+        "\n",
+        "# Step 4: Train the Model\n",
+        "model.fit(X_train, y_train, epochs=8, batch_size=24, validation_split=0.2)\n",
+        "\n",
+        "# Step 5: Evaluate the Model\n",
+        "loss = model.evaluate(X_test, y_test)\n",
+        "print(f'Test Loss: {loss}')\n",
+        "\n",
+        "# Make a prediction\n",
+        "sample_input = np.array([[23, 45]])  # Example input\n",
+        "predicted_sum = model.predict(sample_input)\n",
+        "print(f'Predicted Sum: {predicted_sum[0][0]}')\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "DA3zBMCVnHB0",
+        "outputId": "76972c76-b5a2-459c-c22b-dd6d7702f9f5"
+      },
+      "execution_count": 21,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Epoch 1/8\n",
+            "267/267 [==============================] - 2s 5ms/step - loss: 6086.0493 - val_loss: 529.3110\n",
+            "Epoch 2/8\n",
+            "267/267 [==============================] - 1s 4ms/step - loss: 213.4717 - val_loss: 67.3250\n",
+            "Epoch 3/8\n",
+            "267/267 [==============================] - 1s 4ms/step - loss: 39.5030 - val_loss: 24.3579\n",
+            "Epoch 4/8\n",
+            "267/267 [==============================] - 1s 4ms/step - loss: 16.7097 - val_loss: 11.2456\n",
+            "Epoch 5/8\n",
+            "267/267 [==============================] - 1s 2ms/step - loss: 7.9200 - val_loss: 5.6760\n",
+            "Epoch 6/8\n",
+            "267/267 [==============================] - 1s 2ms/step - loss: 4.4053 - val_loss: 3.4991\n",
+            "Epoch 7/8\n",
+            "267/267 [==============================] - 1s 2ms/step - loss: 2.9406 - val_loss: 2.4791\n",
+            "Epoch 8/8\n",
+            "267/267 [==============================] - 1s 2ms/step - loss: 2.1544 - val_loss: 1.8811\n",
+            "63/63 [==============================] - 0s 1ms/step - loss: 1.8913\n",
+            "Test Loss: 1.8913395404815674\n",
+            "1/1 [==============================] - 0s 66ms/step\n",
+            "Predicted Sum: 68.71587371826172\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
